@@ -10,10 +10,15 @@ public class BorrowRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long memberId;
-    private Long bookId;
-    private Date borrowData;
+    @ManyToMany()
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    @Column(nullable = true)
+    @ManyToMany()
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+
+    private Date borrowData;
     private Date returnDate;
 }
