@@ -1,20 +1,24 @@
 package com.example.curdoprations.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
 public class BorrowRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany()
+    @ManyToOne()
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToMany()
+    @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
 
