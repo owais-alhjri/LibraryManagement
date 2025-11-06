@@ -2,11 +2,11 @@ package com.example.curdoprations.controllers;
 
 import com.example.curdoprations.models.Book;
 import com.example.curdoprations.services.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,5 +27,16 @@ public class BookController {
         response.put("message", book.isEmpty() ? "No Books available ": "Books available");
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Map<String, Object>> addBook(@Valid @RequestBody Book book){
+        Book addBook = bookService.addBook(book);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data",addBook);
+        response.put("message","Book Add Successfully");
+
+        return ResponseEntity.status(201).body(response);
     }
 }
