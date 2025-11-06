@@ -1,4 +1,4 @@
-package com.example.curdoprations.model;
+package com.example.curdoprations.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
