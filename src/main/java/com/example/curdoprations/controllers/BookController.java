@@ -4,7 +4,6 @@ import com.example.curdoprations.models.Book;
 import com.example.curdoprations.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,5 +37,18 @@ public class BookController {
         response.put("message","Book Add Successfully");
 
         return ResponseEntity.status(201).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> updateBook(@Valid @RequestBody Book book, @PathVariable long id){
+        Book updateBook = bookService.updateById(book, id);
+        Map<String, Object> response = new HashMap<>();
+        if (updateBook != null) {
+            response.put("data", updateBook);
+            response.put("message", "Book Updated");
+            return ResponseEntity.ok(response);
+        }
+        response.put("message","Book Not Found");
+        return ResponseEntity.status(404).body(response);
     }
 }
