@@ -16,8 +16,12 @@ import java.util.Map;
 @RequestMapping("/api/books")
 public class BookController {
 
-    @Autowired
-    BookService bookService;
+
+    private final BookService bookService;
+
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
+    }
 
     @GetMapping()
     public ResponseEntity<Map<String, Object>> fetchBooks(){
