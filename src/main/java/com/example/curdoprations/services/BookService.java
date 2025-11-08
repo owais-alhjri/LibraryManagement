@@ -11,8 +11,12 @@ import java.util.Optional;
 
 @Service
 public class BookService {
-    @Autowired
-    BookRepository bookRepository;
+
+    private final BookRepository bookRepository;
+
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     public List<Book> getBooks(){
         return bookRepository.findAll();
@@ -22,20 +26,23 @@ public class BookService {
         return bookRepository.save(book);
     }
     public Book updateById(Book book,Long id){
-        try{
-            Optional<Book> existingBook = bookRepository.findById(id);
-            if(existingBook.isPresent()){
-                Book bookEntity = existingBook.get();
-                bookEntity.setTitle(book.getTitle());
-                bookEntity.setAuthor(book.getAuthor());
-                bookEntity.setAvailable(book.getAvailable());
-                bookEntity.setIsbn(book.getIsbn());
-                return bookRepository.save(bookEntity);
-            }
-        }catch (EntityNotFoundException error){
-            throw error;
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(()->new EntityNotFoundException("Book not found with ID: "+id));
+
+        existingBook.setTitle(book.getTitle());
+        existingBook.setAuthor(book.getAuthor());
+        existingBook.setAvailable(book.getAvailable());
+        existingBook.setIsbn(book.getIsbn());
+
+        return bookRepository.save(existingBook);
+    }
+
+    public void deleteBookById(Long id){
+        if (!bookRepository.existsById(id)){
+            throw new EntityNotFoundException("Book Not Found");
         }
-        return null;
+        bookRepository.deleteById(id);
+
     }
 
 }

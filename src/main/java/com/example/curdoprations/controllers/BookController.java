@@ -2,6 +2,7 @@ package com.example.curdoprations.controllers;
 
 import com.example.curdoprations.models.Book;
 import com.example.curdoprations.services.BookService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,14 +42,27 @@ public class BookController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Map<String, Object>> updateBook(@Valid @RequestBody Book book, @PathVariable long id){
-        Book updateBook = bookService.updateById(book, id);
+        Book updatedBook = bookService.updateById(book, id);
+
         Map<String, Object> response = new HashMap<>();
-        if (updateBook != null) {
-            response.put("data", updateBook);
-            response.put("message", "Book Updated");
-            return ResponseEntity.ok(response);
-        }
-        response.put("message","Book Not Found");
+        response.put("data", updatedBook);
+        response.put("message", "Book Updated successfully");
+
+        return ResponseEntity.status(404).body(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id){
+        bookService.deleteBookById(id);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message","Book has been deleted");
+        return ResponseEntity.ok(response);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(EntityNotFoundException ex){
+        Map<String, Object> response = new HashMap<>();
+        response.put("message",ex.getMessage());
         return ResponseEntity.status(404).body(response);
     }
 }
