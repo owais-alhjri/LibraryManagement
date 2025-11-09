@@ -25,7 +25,7 @@ public class BorrowRecord {
 
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date borrowData = new Date();
+    private Date borrowDate = new Date();
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
