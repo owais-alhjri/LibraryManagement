@@ -2,6 +2,7 @@ package com.example.curdoprations.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.Date;
@@ -15,14 +16,17 @@ public class BorrowRecord {
     private Long id;
 
     @ManyToOne()
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id",nullable = false)
     private Book book;
 
 
-    private Date borrowData;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date borrowData = new Date();
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date returnDate;
 }

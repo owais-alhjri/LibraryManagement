@@ -6,6 +6,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class BookController {
         response.put("data", updatedBook);
         response.put("message", "Book Updated successfully");
 
-        return ResponseEntity.status(404).body(response);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
@@ -63,10 +64,7 @@ public class BookController {
         return ResponseEntity.ok(response);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleEntityNotFoundException(EntityNotFoundException ex){
-        Map<String, Object> response = new HashMap<>();
-        response.put("message",ex.getMessage());
-        return ResponseEntity.status(404).body(response);
-    }
+
+
+
 }

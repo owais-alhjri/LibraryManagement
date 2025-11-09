@@ -32,23 +32,6 @@ public class MemberController {
         return ResponseEntity.status(201).body(response);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, Object> response = new HashMap<>();
-        Map<String, String> errors = new HashMap<>();
-
-        // Collect all field validation errors
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage())
-        );
-
-        // Build final response
-        response.put("message", "Validation failed");
-        response.put("errors", errors);
-
-        return ResponseEntity.status(400).body(response);
-    }
-
 
 
 }
