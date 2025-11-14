@@ -1,5 +1,7 @@
 package com.example.curdoprations.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
@@ -17,10 +19,12 @@ public class BorrowRecord {
 
     @ManyToOne()
     @JoinColumn(name = "member_id", nullable = false)
+    @JsonIgnoreProperties("borrowRecords")
     private Member member;
 
     @ManyToOne
     @JoinColumn(name = "book_id",nullable = false)
+    @JsonIgnoreProperties("borrowRecords")
     private Book book;
 
 

@@ -4,7 +4,9 @@ import com.example.curdoprations.models.BorrowRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface BorrowRecordRepository extends JpaRepository<BorrowRecord, Long> {
-    Long countByMember_IdAndReturnDateIsNull(Long memberId);
+    Optional<BorrowRecord> findByMemberIdAndBookIdAndReturnDateIsNull(Long memberId, Long bookId) ;
 }

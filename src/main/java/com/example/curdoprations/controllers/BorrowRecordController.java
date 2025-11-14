@@ -1,8 +1,12 @@
 package com.example.curdoprations.controllers;
 
+import com.example.curdoprations.models.BorrowRecord;
 import com.example.curdoprations.models.BorrowRequest;
+import com.example.curdoprations.repository.BorrowRecordRepository;
+import com.example.curdoprations.services.BorrowRecordService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,15 +15,43 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/borrowRecord")
+@RequestMapping("/api")
 public class BorrowRecordController {
 
+    private final BorrowRecordService borrowRecordService;
 
-    public ResponseEntity<Map<String, Object>> borrowBook(@Valid @RequestBody BorrowRequest borrowRequest){
+    public BorrowRecordController(BorrowRecordService borrowRecordService) {
+        this.borrowRecordService = borrowRecordService;
+    }
+
+    @PostMapping("/borrow")
+    public ResponseEntity<Map<String, Object>> borrowBook(@Valid @RequestBody BorrowRequest borrowRequest) throws Exception {
+        BorrowRecord record  = borrowRecordService.borrowBook(borrowRequest);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", record.getId());
+        data.put("memberId", record.getMember().getId());
+        data.put("bookId", record.getBook().getId());
+        data.put("borrowDate", record.getBorrowDate());
+        data.put("returnDate", record.getReturnDate());
 
         Map<String, Object> response = new HashMap<>();
-        response.put("message",response);
+        response.put("data", data);
+        response.put("message", "Book borrowed successfully");
 
         return ResponseEntity.status(201).body(response);
     }
+
+
+
+    @PostMapping("/return")
+    public ResponseEntity<Map<String, Object>> returnBook(@Valid @RequestBody BorrowRequest borrowRequest ){
+        BorrowRecord bookReturned = borrowRecordService.returnBookById(borrowRequest);
+        Map<String, Object> response = new HashMap<>();
+        response.put("data",bookReturned);
+        response.put("message","Book returned successfully");
+
+        return ResponseEntity.status(201).body(response);
+    }
+
 }

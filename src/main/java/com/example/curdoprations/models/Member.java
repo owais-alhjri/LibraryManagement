@@ -1,5 +1,6 @@
 package com.example.curdoprations.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -25,5 +26,6 @@ public class Member {
     private String email;
 
     @OneToMany(mappedBy = "member")
+    @JsonIgnore
     private List<BorrowRecord> borrowRecords;
 }

@@ -4,46 +4,91 @@ import com.example.curdoprations.models.Book;
 import com.example.curdoprations.models.BorrowRecord;
 import com.example.curdoprations.models.BorrowRequest;
 import com.example.curdoprations.models.Member;
+import com.example.curdoprations.repository.BookRepository;
 import com.example.curdoprations.repository.BorrowRecordRepository;
 import com.example.curdoprations.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class BorrowRecordService {
 
     private final BorrowRecordRepository borrowRecordRepository;
     private final MemberRepository memberRepository;
+    private final BookRepository bookRepository;
 
-    public BorrowRecordService(BorrowRecordRepository borrowRecordRepository, MemberRepository memberRepository) {
+    public BorrowRecordService(BorrowRecordRepository borrowRecordRepository, MemberRepository memberRepository, BookRepository bookRepository) {
         this.borrowRecordRepository = borrowRecordRepository;
         this.memberRepository = memberRepository;
+        this.bookRepository = bookRepository;
     }
 
-    public BorrowRequest borrowBook(BorrowRequest borrowRequest) throws Exception {
-        if(!borrowRecordRepository.existsById(borrowRequest.getMemberId())){
+    public  BorrowRecord borrowBook(BorrowRequest borrowRequest) throws Exception {
+
+        //to check if the member exists by the id
+        if(!memberRepository.existsById(borrowRequest.getMemberId())){
             throw new EntityNotFoundException("member Id not found");
         }
 
-        BorrowRecord book = borrowRecordRepository.getReferenceById(borrowRequest.getBookId());
-        Book available = book.getBook();
-        boolean t =  available.getAvailable();
+        // checking if the book is available or not
+        Book book = bookRepository.findById(borrowRequest.getBookId())
+                .orElseThrow(()-> new EntityNotFoundException("Book not found"));
 
+        if (!book.getAvailable()){
+            throw new EntityNotFoundException("Book is not available");
+        }
+
+        //checking if the member have more then 3 book or not
         Member member = memberRepository.getReferenceById(borrowRequest.getMemberId());
         List<BorrowRecord> records = member.getBorrowRecords();
-        if (records.size() > 3){
+        if (records.size() >= 3){
             throw new Exception("cannot borrow more than 3 books");
         }
+        BorrowRecord borrowRecord = new BorrowRecord();
+        borrowRecord.setMember(member);
+        borrowRecord.setBook(book);
+        borrowRecord.setBorrowDate(new Date());
+        borrowRecord.setReturnDate(null);
 
+        borrowRecordRepository.save(borrowRecord);
 
-        if (!borrowRecordRepository.existsById(borrowRequest.getBookId()) && (!t) ){
-             throw new EntityNotFoundException("Book is not available");
-        }
+        book.setAvailable(false);
+        bookRepository.save(book);
+
+        return borrowRecord;
+    }
+
+    public BorrowRecord returnBookById(BorrowRequest borrowRequest){
+
+        Long memberId = borrowRequest.getMemberId();
+        Long bookId = borrowRequest.getBookId();
+
+        Member member = memberRepository.findById(memberId)
+                        .orElseThrow(()-> new EntityNotFoundException("Member not found"));
+
+        Book book = bookRepository.findById(bookId)
+                        .orElseThrow(()-> new EntityNotFoundException("Book not found"));
+
+        BorrowRecord record = borrowRecordRepository
+                .findByMemberIdAndBookIdAndReturnDateIsNull(memberId,bookId)
+                        .orElseThrow(()->new EntityNotFoundException("No active borrow found fot this member and book"));
+
+        book.setAvailable(true);
+        bookRepository.save(book);
+
+        record.setReturnDate(new Date());
+        borrowRecordRepository.save(record);
+
+        return record;
 
     }
+
+
+
+
+
+
 }
