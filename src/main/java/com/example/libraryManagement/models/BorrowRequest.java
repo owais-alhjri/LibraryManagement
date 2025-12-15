@@ -1,6 +1,5 @@
-package com.example.curdoprations.models;
+package com.example.libraryManagement.models;
 
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
-package com.example.curdoprations.repository;
+package com.example.libraryManagement.repository;
 
-import com.example.curdoprations.models.Member;
+import com.example.libraryManagement.models.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,13 +1,12 @@
-package com.example.curdoprations.services;
+package com.example.libraryManagement.services;
 
-import com.example.curdoprations.models.Book;
-import com.example.curdoprations.repository.BookRepository;
+import com.example.libraryManagement.models.Book;
+import com.example.libraryManagement.repository.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BookService {
@@ -43,6 +42,19 @@ public class BookService {
         }
         bookRepository.deleteById(id);
 
+    }
+
+
+    public List<Book> findBookByAuthorOrTitle(String author, String title){
+        if (author != null && !author.isBlank()){
+            return bookRepository.findByAuthor(author);
+        }
+        if (title != null && !title.isBlank()){
+            return bookRepository.findByTitle(title);
+
+        }
+
+        return  Collections.emptyList();
     }
 
 }

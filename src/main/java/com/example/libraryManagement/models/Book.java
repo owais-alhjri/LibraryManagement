@@ -1,4 +1,4 @@
-package com.example.curdoprations.models;
+package com.example.libraryManagement.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

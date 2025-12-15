@@ -1,12 +1,9 @@
-package com.example.curdoprations.controllers;
+package com.example.libraryManagement.controllers;
 
-import com.example.curdoprations.models.Book;
-import com.example.curdoprations.services.BookService;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.libraryManagement.models.Book;
+import com.example.libraryManagement.services.BookService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -64,6 +61,18 @@ public class BookController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Map<String, Object>> findBookByAuthor(@RequestParam(defaultValue = "")
+                                                                    String author,
+                                                                @RequestParam(defaultValue = "")
+                                                                String title){
+        List<Book> bookByAuthor = bookService.findBookByAuthorOrTitle(author, title);
+        Map<String, Object> response = new HashMap<>();
+        response.put("data",bookByAuthor);
+        response.put("message","List of books by author or title");
+        return ResponseEntity.ok(response);
+
+    }
 
 
 

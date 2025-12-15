@@ -1,9 +1,8 @@
-package com.example.curdoprations.controllers;
+package com.example.libraryManagement.controllers;
 
-import com.example.curdoprations.models.BorrowRecord;
-import com.example.curdoprations.models.BorrowRequest;
-import com.example.curdoprations.repository.BorrowRecordRepository;
-import com.example.curdoprations.services.BorrowRecordService;
+import com.example.libraryManagement.models.BorrowRecord;
+import com.example.libraryManagement.models.BorrowRequest;
+import com.example.libraryManagement.services.BorrowRecordService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

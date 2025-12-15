@@ -1,13 +1,13 @@
-package com.example.curdoprations;
+package com.example.libraryManagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CurdOprationsApplication {
+public class LibraryManagementApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CurdOprationsApplication.class, args);
+        SpringApplication.run(LibraryManagementApplication.class, args);
     }
 
 }

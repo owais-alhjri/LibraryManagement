@@ -1,14 +1,13 @@
-package com.example.curdoprations.services;
+package com.example.libraryManagement.services;
 
-import com.example.curdoprations.models.Book;
-import com.example.curdoprations.models.BorrowRecord;
-import com.example.curdoprations.models.BorrowRequest;
-import com.example.curdoprations.models.Member;
-import com.example.curdoprations.repository.BookRepository;
-import com.example.curdoprations.repository.BorrowRecordRepository;
-import com.example.curdoprations.repository.MemberRepository;
+import com.example.libraryManagement.models.Book;
+import com.example.libraryManagement.models.BorrowRecord;
+import com.example.libraryManagement.models.BorrowRequest;
+import com.example.libraryManagement.models.Member;
+import com.example.libraryManagement.repository.BookRepository;
+import com.example.libraryManagement.repository.BorrowRecordRepository;
+import com.example.libraryManagement.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
