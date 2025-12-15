@@ -16,9 +16,9 @@ public class BorrowRecord {
     private Long id;
 
     @ManyToOne()
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnoreProperties("borrowRecords")
-    private Member member;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name = "book_id",nullable = false)

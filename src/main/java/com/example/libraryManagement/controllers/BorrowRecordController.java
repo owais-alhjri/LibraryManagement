@@ -29,7 +29,7 @@ public class BorrowRecordController {
 
         Map<String, Object> data = new HashMap<>();
         data.put("id", record.getId());
-        data.put("memberId", record.getMember().getId());
+        data.put("userId", record.getUser().getId());
         data.put("bookId", record.getBook().getId());
         data.put("borrowDate", record.getBorrowDate());
         data.put("returnDate", record.getReturnDate());

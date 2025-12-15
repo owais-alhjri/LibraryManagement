@@ -2,8 +2,8 @@
 package com.example.libraryManagement;
 
 import com.example.libraryManagement.models.BorrowRecord;
-import com.example.libraryManagement.models.Member;
-import com.example.libraryManagement.repository.MemberRepository;
+import com.example.libraryManagement.models.Users;
+import com.example.libraryManagement.repository.UserRepository;
 import com.example.libraryManagement.services.BorrowRecordService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ class libraryManagementApplicationApplicationTests {
     private BorrowRecordService borrowRecordService;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     @Test
     void testBorrowRecordList(){
         System.out.println(">>> Running testBorrowRecordList...");
-        Member member = memberRepository.findById(2L).orElseThrow();
-        List<BorrowRecord> records = member.getBorrowRecords();
+        Users users = userRepository.findById(2L).orElseThrow();
+        List<BorrowRecord> records = users.getBorrowRecords();
         System.out.println("Records count = " + records.size());
 
 

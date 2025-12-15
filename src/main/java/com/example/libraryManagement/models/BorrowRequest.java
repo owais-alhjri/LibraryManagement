@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class BorrowRequest {
 
-    @NotNull(message = "Member ID is required")
-    private Long memberId;
+    @NotNull(message = "User ID is required")
+    private Long userId;
 
     @NotNull(message = "Book ID is required")
     private Long bookId;

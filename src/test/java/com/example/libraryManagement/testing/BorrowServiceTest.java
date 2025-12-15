@@ -3,9 +3,9 @@
 package com.example.libraryManagement.testing;
 
 import com.example.libraryManagement.models.BorrowRecord;
-import com.example.libraryManagement.models.Member;
+import com.example.libraryManagement.models.Users;
 import com.example.libraryManagement.repository.BookRepository;
-import com.example.libraryManagement.repository.MemberRepository;
+import com.example.libraryManagement.repository.UserRepository;
 import com.example.libraryManagement.services.BorrowRecordService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ public class BorrowServiceTest {
     private BorrowRecordService borrowRecordService;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private BookRepository bookRepository;
@@ -29,8 +29,8 @@ public class BorrowServiceTest {
     @Test
     void testBorrowRecordList(){
         System.out.println(">>> Running testBorrowRecordList...");
-        Member member = memberRepository.findById(1L).orElseThrow();
-        List<BorrowRecord> records = member.getBorrowRecords();
+        Users users = userRepository.findById(1L).orElseThrow();
+        List<BorrowRecord> records = users.getBorrowRecords();
         System.out.println("Records count = " + records.size());
 
         System.out.println("Book by author");
