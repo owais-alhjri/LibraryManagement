@@ -5,6 +5,7 @@ import com.example.libraryManagement.models.BorrowRequest;
 import com.example.libraryManagement.services.BorrowRecordService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class BorrowRecordController {
     }
 
     @PostMapping("/borrow")
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<Map<String, Object>> borrowBook(@Valid @RequestBody BorrowRequest borrowRequest) throws Exception {
         BorrowRecord record  = borrowRecordService.borrowBook(borrowRequest);
 
@@ -44,6 +46,7 @@ public class BorrowRecordController {
 
 
     @PostMapping("/return")
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<Map<String, Object>> returnBook(@Valid @RequestBody BorrowRequest borrowRequest ){
         BorrowRecord bookReturned = borrowRecordService.returnBookById(borrowRequest);
         Map<String, Object> response = new HashMap<>();

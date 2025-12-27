@@ -1,14 +1,27 @@
-FROM eclipse-temurin:21-jdk-alpine
+# -------- Stage 1: Build --------
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 
 WORKDIR /app
 
-RUN apk add --no-cache bash
+# Copy pom.xml first (better caching)
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-COPY target/*.jar app.jar
-COPY wait-for-it.sh /wait-for-it.sh
+# Copy source code
+COPY src ./src
 
-RUN chmod +x /wait-for-it.sh
+# Build the application
+RUN mvn clean package -DskipTests
+
+
+# -------- Stage 2: Run --------
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+
+# Copy JAR from build stage
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["/wait-for-it.sh", "db:5432", "--", "java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

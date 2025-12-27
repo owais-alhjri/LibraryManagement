@@ -5,6 +5,7 @@ import com.example.libraryManagement.models.Users;
 import com.example.libraryManagement.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -30,6 +31,7 @@ public class UserController {
     }
 
     @GetMapping("/allUsers")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map<String, Object>> allUsers(){
         List<Users> users =  userService.fetchUser();
         Map<String, Object> response = new HashMap<>();
@@ -40,6 +42,7 @@ public class UserController {
 
 
     @GetMapping("/{id}/borrowed")
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<Map<String, Object>> viewAllBorrowedBooks(@PathVariable Long id ){
             List<BorrowRecord> view = userService.viewBooks(id);
 

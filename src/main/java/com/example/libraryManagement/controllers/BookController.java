@@ -4,6 +4,7 @@ import com.example.libraryManagement.models.Book;
 import com.example.libraryManagement.services.BookService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class BookController {
     }
 
     @GetMapping()
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<Map<String, Object>> fetchBooks(){
         List<Book> book =  bookService.getBooks();
         Map<String, Object> response = new  HashMap<>();
@@ -32,6 +34,7 @@ public class BookController {
     }
 
     @PostMapping()
+    @PreAuthorize("hasyRole('LIBRARIAN')")
     public ResponseEntity<Map<String, Object>> addBook(@Valid @RequestBody Book book){
         Book addBook = bookService.addBook(book);
 
@@ -43,6 +46,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('LIBRARIAN')")
     public ResponseEntity<Map<String, Object>> updateBook(@Valid @RequestBody Book book, @PathVariable long id){
         Book updatedBook = bookService.updateById(book, id);
 
@@ -54,6 +58,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('LIBRARIAN')")
     public ResponseEntity<Map<String, Object>> deleteBook(@PathVariable Long id){
         bookService.deleteBookById(id);
         Map<String, Object> response = new HashMap<>();
@@ -62,6 +67,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
+    @PreAuthorize("hasRole('MEMBER')")
     public ResponseEntity<Map<String, Object>> findBookByAuthor(@RequestParam(defaultValue = "")
                                                                     String author,
                                                                 @RequestParam(defaultValue = "")
