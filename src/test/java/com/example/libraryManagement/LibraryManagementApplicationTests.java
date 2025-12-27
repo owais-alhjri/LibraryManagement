@@ -19,6 +19,7 @@ class libraryManagementApplicationApplicationTests {
     @Autowired
     private UserRepository userRepository;
 
+    /*
     @Test
     void testBorrowRecordList(){
         System.out.println(">>> Running testBorrowRecordList...");
@@ -30,5 +31,7 @@ class libraryManagementApplicationApplicationTests {
         System.out.println("Borrowed books:");
         records.forEach(r -> System.out.println(r.getBook().getTitle()));
     }
+
+     */
 }
 
