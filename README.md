@@ -39,7 +39,6 @@ src/main/java/com/example/librarymanagement
 ├── service        # Business logic
 ├── repository     # JPA repositories
 ├── model          # JPA entities
-├── mapper         # Entity ↔ DTO mapping
 ├── exception      # Custom exceptions & handlers
 ├── security       # JWT & Spring Security config
 └── config         # Application configuration
