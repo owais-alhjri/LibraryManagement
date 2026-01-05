@@ -117,6 +117,41 @@ This project focuses on:
 
 ---
 
+🐳 Docker Support
+
+This project can be containerized using Docker to ensure consistent environments across development and deployment.
+
+📦 Docker Setup
+
+The project uses:
+
+Docker for containerization
+
+Docker Compose to run the application and PostgreSQL together
+
+▶️ Run with Docker
+# Build and start containers
+docker-compose up --build
+
+The application will be available at:
+
+http://localhost:8080
+🗄️ Services
+
+app – Spring Boot application
+
+db – PostgreSQL database
+
+✅ Benefits of Docker
+
+No need to install Java or PostgreSQL locally
+
+Same environment for all developers
+
+Easy deployment and scaling
+
+---
+
 ## 📌 Future Improvements
 
 - Swagger/OpenAPI documentation
