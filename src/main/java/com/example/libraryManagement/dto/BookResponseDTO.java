@@ -1,17 +1,12 @@
 package com.example.libraryManagement.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class BookResponseDTO {
+public record BookResponseDTO (
 
+     Long id,
+     String title,
+     String author,
+     String isbn,
+     Boolean available
 
-    private Long Id;
-    private String title;
-    private String author;
-    private String isbn;
-    private Boolean available;
-
-}
+){}

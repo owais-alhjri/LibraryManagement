@@ -13,13 +13,13 @@ import java.util.List;
 
 @SpringBootTest
 class libraryManagementApplicationApplicationTests {
+    /*
     @Autowired
     private BorrowRecordService borrowRecordService;
 
     @Autowired
     private UserRepository userRepository;
 
-    /*
     @Test
     void testBorrowRecordList(){
         System.out.println(">>> Running testBorrowRecordList...");

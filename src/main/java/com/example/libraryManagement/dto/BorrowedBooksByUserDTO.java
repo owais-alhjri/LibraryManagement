@@ -1,15 +1,12 @@
 package com.example.libraryManagement.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
-public class BorrowedBooksByUserDTO {
-    private Long id;
-    private String name;
-    private String email;
-    private List<BorrowedBookDTO> borrowedBooks;
-}
+
+public record BorrowedBooksByUserDTO (
+     Long id,
+     String name,
+     String email,
+     List<BorrowedBookDTO> borrowedBooks
+){}
