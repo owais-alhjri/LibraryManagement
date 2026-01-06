@@ -28,8 +28,7 @@ public class UserService implements UserDetailsService {
 
 
     public Users addUser(Users users){
-        String rawPassword = users.getPassword();
-        users.setPassword(passwordEncoder.encode(rawPassword));
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
          return userRepository.save(users);
     }
     @Override
