@@ -12,7 +12,7 @@ public interface BorrowRecordMapper {
     BorrowRecordResponseDTO toResponse(BorrowRecord borrowRecord);
 
     @Mapping(target = "id",ignore = true)
-    @Mapping(target = "borrowDate",expression = "java(java.time.LocalDate.now())")
+    //@Mapping(target = "borrowDate",expression = "java(java.time.LocalDate.now())")
     @Mapping(target = "returnDate",constant = "null")
     BorrowRecord toEntity(BorrowBookDTO dto);
 

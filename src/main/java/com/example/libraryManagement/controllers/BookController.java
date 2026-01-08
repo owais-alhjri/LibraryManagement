@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @PostMapping()
-    @PreAuthorize("hasyRole('LIBRARIAN')")
+    @PreAuthorize("hasRole('LIBRARIAN')")
     public ResponseEntity<Map<String, Object>> addBook(@Valid @RequestBody Book book){
         Book addBook = bookService.addBook(book);
 
